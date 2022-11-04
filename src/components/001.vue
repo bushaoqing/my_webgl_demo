@@ -22,23 +22,27 @@ const onVertexShader = '' +
 // const onVertexShader = document.getElementById('vertexShader').innerText;
 
 //片元着色器源码: 画一个方形（默认）
-const onFragmentShader = '' +
-  'precision lowp float;' +
-  'void main(){' +
-  '   gl_FragColor=vec4(0.0,0.0,0.0,1.0);' +
-  '}';
-
-//片元着色器源码: 画一个圆点
 // const onFragmentShader = '' +
 //   'precision lowp float;' +
 //   'void main(){' +
-//   '   float r = distance(gl_PointCoord, vec2(0.5, 0.5));' +
-//   '   if(r < 0.5){;' +
-//   '     gl_FragColor = vec4(1.0,0.0,0.0,1.0);' +
-//   '   } else {;' +
-//   '     discard;' +
-//   '   };' +
+//   '   gl_FragColor=vec4(0.0,0.0,0.0,1.0);' +
 //   '}';
+
+//片元着色器源码: 画一个圆点
+const onFragmentShader = '' +
+  'precision lowp float;' +
+  'void main(){' +
+  // 计算方形区域每个片元距离方形几何中心的距离
+  // gl.POINTS模式点渲染的方形区域,方形中心是0.5,0.5,左上角是坐标原点,右下角是1.0,1.0，
+  '   float r = distance(gl_PointCoord, vec2(0.5, 0.5));' +
+  '   if(r < 0.5){;' +
+  // 方形区域片元距离几何中心半径小于0.5，像素颜色设置绿色
+  '     gl_FragColor = vec4(0.0,1.0,0.0,1.0);' +
+  '   } else {;' +
+  // 方形区域距离几何中心半径不小于0.5的片元剪裁舍弃掉：
+  '     discard;' +
+  '   };' +
+  '}';
 // const onFragmentShader = document.getElementById('fragmentShader').innerText;
 
 const onWebgl = () => {
