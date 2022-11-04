@@ -21,11 +21,24 @@ const onVertexShader = '' +
   '}';
 // const onVertexShader = document.getElementById('vertexShader').innerText;
 
-//片元着色器源码
+//片元着色器源码: 画一个方形（默认）
 const onFragmentShader = '' +
+  'precision lowp float;' +
   'void main(){' +
   '   gl_FragColor=vec4(0.0,0.0,0.0,1.0);' +
   '}';
+
+//片元着色器源码: 画一个圆点
+// const onFragmentShader = '' +
+//   'precision lowp float;' +
+//   'void main(){' +
+//   '   float r = distance(gl_PointCoord, vec2(0.5, 0.5));' +
+//   '   if(r < 0.5){;' +
+//   '     gl_FragColor = vec4(1.0,0.0,0.0,1.0);' +
+//   '   } else {;' +
+//   '     discard;' +
+//   '   };' +
+//   '}';
 // const onFragmentShader = document.getElementById('fragmentShader').innerText;
 
 const onWebgl = () => {
@@ -42,7 +55,6 @@ const onWebgl = () => {
    */
   gl.clearColor(0, 0, 0, 0.6);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.POINTS, 0, 1);
   gl.drawArrays(gl.POINTS, 0, 1);
 
 }
