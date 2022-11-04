@@ -9,7 +9,7 @@
  * @file 旋转的立方体
  */
 import { onMounted } from 'vue';
-import { initShaders, creatShaders } from '../hooks/use_init_shaders';
+import { creatShaders } from '../hooks/use_init_shaders';
 import { vertexBuffer } from '../hooks/use_vertex_buffer';
 
 //顶点着色器源码
@@ -38,7 +38,6 @@ const onWebgl = () => {
   const canvas = document.getElementById('canvas');
   //三维画笔
   const gl = canvas.getContext('webgl');
-  // initShaders(gl, onVertexShader, onFragmentShader);
 
 
   /**
@@ -113,7 +112,8 @@ const onWebgl = () => {
   const mx = gl.getUniformLocation(gl.program, 'mx');
   const my = gl.getUniformLocation(gl.program, 'my');
   let angle = Math.PI / 4;//起始角度
-  function draw() {
+
+  const draw = () => {
     console.log(angle)
     if (angle > 15) return;
 
