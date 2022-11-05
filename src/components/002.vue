@@ -26,7 +26,10 @@ const onVertexShader = '' +
 //片元着色器源码
 const onFragmentShader = '' +
   'void main(){' +
-  '   gl_FragColor=vec4(0.0,0.0,0.0,1.0);' +
+  // vec4精度是带一位小数点的，不写小数点警告+无法渲染
+  // x轴 渐变
+  '   gl_FragColor=vec4(gl_FragCoord.x/500.0*1.0,0.0,0.0,1.0);' +
+  // '   gl_FragColor=vec4(1.0,0.0,0.0,1.0);' +
   '}';
 // const onFragmentShader = document.getElementById('fragmentShader').innerText;
 
@@ -47,11 +50,19 @@ const onWebgl = () => {
   // gl.drawArrays(gl.POINTS, 0, 1);
   // gl.drawArrays(gl.POINTS, 0, 1);
 
+  // 画三角形  or   线条
+  const isTriangles = true;
+
   /** 
    * 2、画矩形
    */
   //类型数组构造函数Float32Array创建顶点数组
-  var data = new Float32Array([0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5]);
+  var data = null;
+  if (isTriangles) {
+    data = new Float32Array([-0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5]);
+  } else {
+    data = new Float32Array([0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5]);;
+  }
 
   //获取顶点着色器的位置变量apos，即aposLocation指向apos变量。
   var aposLocation = gl.getAttribLocation(gl.program, 'apos');
@@ -65,7 +76,13 @@ const onWebgl = () => {
   gl.vertexAttribPointer(aposLocation, 2, gl.FLOAT, false, 0, 0);
   //允许数据传递
   gl.enableVertexAttribArray(aposLocation);
-  gl.drawArrays(gl.LINE_LOOP, 0, 4);
+
+  if (isTriangles) {
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.drawArrays(gl.TRIANGLES, 1, 3);
+  } else {
+    gl.drawArrays(gl.LINE_LOOP, 0, 4);
+  }
 }
 
 const onCanvas = () => {
